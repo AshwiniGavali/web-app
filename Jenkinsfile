@@ -19,6 +19,7 @@ pipeline {
         stage('Compile') {
             steps {
                 sh """
+                #! /bin/bash
                 echo 'Cloning repository...'
                 git clone $GH_WEB_APP_REPO $WEB_APP_DIR
                 cd $WEB_APP_DIR
@@ -40,6 +41,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh """
+                #! /bin/bash
                 echo 'Building Docker image...'
                 cd $WEB_APP_DIR
                 export APP_REVISION=$(cat REVISION)
