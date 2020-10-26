@@ -25,7 +25,7 @@ pipeline {
                 git clone $GH_WEB_APP_REPO $WEB_APP_DIR
                 cd $WEB_APP_DIR
                 echo 'Compiling golang application...'
-                go build ${WEB_APP_DIR}/bin/go-web-app
+                go build -o ${WEB_APP_DIR}/bin/go-web-app
                 '''
             }
         }
