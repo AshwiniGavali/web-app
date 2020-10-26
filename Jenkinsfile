@@ -11,7 +11,7 @@ pipeline {
         CGO_ENABLED = 0 
         GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
         DH_PAT = credentials('JaySAP_DH_PAT')
-        GH_WEB_APP_REPO = 'git@github.com:jaythamke/web-app.git'
+        GH_WEB_APP_REPO = 'https://github.com/jaythamke/web-app.git'
         WEB_APP_DIR = "${JENKINS_HOME}/web-app"
     }
 
