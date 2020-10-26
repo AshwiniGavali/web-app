@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh """
                 echo 'Cloning repository...'
-                git clone $GH_WEB_APP_REPO ${WEB_APP_DIR}
+                git clone $GH_WEB_APP_REPO $WEB_APP_DIR
                 cd $WEB_APP_DIR
                 echo 'Compiling golang application...'
                 go build ./bin/go-web-app
@@ -41,9 +41,9 @@ pipeline {
             steps {
                 sh """
                 echo 'Building Docker image...'
-                cd ${WEB_APP_DIR}
+                cd $WEB_APP_DIR
                 export APP_REVISION=$(cat REVISION)
-                docker build . --tag go-web-app:${APP_REVISION}
+                docker build . --tag go-web-app:$APP_REVISION
                 docker images
                 """
             }
