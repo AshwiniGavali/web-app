@@ -46,8 +46,8 @@ pipeline {
                 echo 'Building Docker image...'
                 cd $WEB_APP_DIR
                 export APP_REVISION=$(cat REVISION)
-                docker build . --tag go-web-app:$APP_REVISION
-                docker images
+                sudo docker build . --tag go-web-app:$APP_REVISION
+                sudo docker images
                 '''
             }
         }
