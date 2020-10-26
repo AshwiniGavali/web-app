@@ -21,6 +21,7 @@ pipeline {
                 sh '''
                 #! /bin/bash
                 echo 'Cloning repository...'
+                rm -rf $WEB_APP_DIR
                 git clone $GH_WEB_APP_REPO $WEB_APP_DIR
                 cd $WEB_APP_DIR
                 echo 'Compiling golang application...'
