@@ -18,36 +18,36 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh """
+                sh '''
                 #! /bin/bash
                 echo 'Cloning repository...'
                 git clone $GH_WEB_APP_REPO $WEB_APP_DIR
                 cd $WEB_APP_DIR
                 echo 'Compiling golang application...'
                 go build ./bin/go-web-app
-                """
+                '''
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh """
+                sh '''
                 #! /bin/bash
                 sleep 2
                 echo "This is a simulation of testing!"
-                """
+                '''
             }
         }
         stage('Build Image') {
             steps {
-                sh """
+                sh '''
                 #! /bin/bash
                 echo 'Building Docker image...'
                 cd $WEB_APP_DIR
                 export APP_REVISION=$(cat REVISION)
                 docker build . --tag go-web-app:$APP_REVISION
                 docker images
-                """
+                '''
             }
         }
         stage('Push') {
