@@ -47,7 +47,6 @@ pipeline {
                 echo 'Building Docker image...'
                 cd $WEB_APP_DIR
                 export APP_REVISION=$(cat REVISION)
-                whoami
                 docker build . --tag go-web-app:$APP_REVISION
                 docker images
                 '''
@@ -57,9 +56,13 @@ pipeline {
             steps {
                 sh '''
                 #! /bin/bash
-                echo 'Publishing image to docker hub...'
+                echo 'Preparing for publish image to docker hub...'
                 cd $WEB_APP_DIR
-                docker push $DH_REPO/go-web-app:$APP_REVISION
+                echo 'Retagging the image...'
+                docker tag go-web-app:$APP_REVISION $DH_REPO/web-app:$APP_REVISION
+                echo 'Pushing image to docker hub...'
+                docker login --username $DH_REPO --password $DH_PAT
+                docker push $DH_REPO/web-app:$APP_REVISION
                 '''
             }
         }
