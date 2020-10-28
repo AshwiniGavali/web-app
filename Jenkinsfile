@@ -14,6 +14,7 @@ pipeline {
         GH_WEB_APP_REPO = 'https://github.com/jaythamke/web-app.git'
         WEB_APP_DIR = "${JENKINS_HOME}/web-app"
         DH_REPO = "jayeshthamkesap"
+        REVISION_DATA = "/tmp/REVISION"
     }
 
     stages {
@@ -46,7 +47,8 @@ pipeline {
                 #! /bin/bash
                 echo 'Building Docker image...'
                 cd $WEB_APP_DIR
-                export APP_REVISION=$(cat REVISION)
+                APP_REVISION=$(cat REVISION)
+                cat REVISION > $REVISION_DATA
                 docker build . --tag go-web-app:$APP_REVISION
                 docker images
                 '''
@@ -59,6 +61,7 @@ pipeline {
                 echo 'Preparing for publish image to docker hub...'
                 cd $WEB_APP_DIR
                 echo 'Retagging the image...'
+                APP_REVISION=$(cat $REVISION_DATA)
                 docker tag go-web-app:$APP_REVISION $DH_REPO/web-app:$APP_REVISION
                 echo 'Pushing image to docker hub...'
                 docker login --username $DH_REPO --password $DH_PAT
