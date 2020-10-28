@@ -13,6 +13,7 @@ pipeline {
         DH_PAT = credentials('JaySAP_DH_PAT')
         GH_WEB_APP_REPO = 'https://github.com/jaythamke/web-app.git'
         WEB_APP_DIR = "${JENKINS_HOME}/web-app"
+        DH_REPO = "jayeshthamkesap"
     }
 
     stages {
@@ -54,7 +55,12 @@ pipeline {
         }
         stage('Push') {
             steps {
-                echo 'Push image to docker hub....'
+                sh '''
+                #! /bin/bash
+                echo 'Publishing image to docker hub...'
+                cd $WEB_APP_DIR
+                docker push $DH_REPO/go-web-app:$APP_REVISION
+                '''
             }
         }
     }
